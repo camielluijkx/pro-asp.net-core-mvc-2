@@ -1,16 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-namespace LanguageFeatures.Models {
-
-    public class ShoppingCart : IEnumerable<Product> {
+namespace LanguageFeatures.Models
+{
+    public class ShoppingCart : IEnumerable<Product> // Implement the IEnumerable<T> Interface
+    {
         public IEnumerable<Product> Products { get; set; }
 
-        public IEnumerator<Product> GetEnumerator() {
+        public IEnumerator<Product> GetEnumerator()
+        {
             return Products.GetEnumerator();
         }
 
-        IEnumerator IEnumerable.GetEnumerator() {
+        IEnumerator IEnumerable.GetEnumerator()
+        {
             return GetEnumerator();
         }
     }
