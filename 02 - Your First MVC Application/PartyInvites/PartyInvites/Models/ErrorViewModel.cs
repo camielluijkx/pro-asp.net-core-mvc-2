@@ -1,5 +1,3 @@
-using System;
-
 namespace PartyInvites.Models
 {
     public class ErrorViewModel
