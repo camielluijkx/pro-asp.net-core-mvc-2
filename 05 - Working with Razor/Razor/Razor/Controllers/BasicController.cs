@@ -2,7 +2,7 @@
 using Razor.Models;
 
 namespace Razor.Controllers {
-    public class HomeController : Controller
+    public class BasicController : Controller
     {
         public IActionResult Index()
         {
