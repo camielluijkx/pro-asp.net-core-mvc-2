@@ -17,7 +17,8 @@
             <tr><td>Name</td><td>Price</td></tr>
         </thead>
         <tbody>
-            @foreach (var p in Model) {
+            @foreach (var p in Model)
+            {
                 <tr>
                     <td>@p.Name</td>
                     <td>@($"{p.Price:C2}")</td>

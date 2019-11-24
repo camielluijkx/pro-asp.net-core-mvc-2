@@ -1,23 +1,28 @@
 ﻿using System.Collections.Generic;
 
-namespace WorkingWithVisualStudio.Models {
-    public class SimpleRepository {
-        private static SimpleRepository sharedRepository = new SimpleRepository();
-        private Dictionary<string, Product> products
-            = new Dictionary<string, Product>();
+namespace WorkingWithVisualStudio.Models
+{
+    public class SimpleRepository
+    {
+        private Dictionary<string, Product> products = new Dictionary<string, Product>();
 
-        public static SimpleRepository SharedRepository => sharedRepository;
+        public static SimpleRepository SharedRepository { get; } = new SimpleRepository();
 
-        public SimpleRepository() {
-            var initialItems = new[] {
+        public SimpleRepository()
+        {
+            var initialItems = new[] 
+            {
                 new Product { Name = "Kayak", Price = 275M },
                 new Product { Name = "Lifejacket", Price = 48.95M },
                 new Product { Name = "Soccer ball", Price = 19.50M },
                 new Product { Name = "Corner flag", Price = 34.95M }
             };
-            foreach (var p in initialItems) {
+
+            foreach (var p in initialItems)
+            {
                 AddProduct(p);
             }
+
             products.Add("Error", null);
         }
 
