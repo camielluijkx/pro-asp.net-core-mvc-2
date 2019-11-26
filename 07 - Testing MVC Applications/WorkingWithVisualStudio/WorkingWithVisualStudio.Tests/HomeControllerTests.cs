@@ -9,10 +9,11 @@ namespace WorkingWithVisualStudio.Tests
 {
     public class HomeControllerTests
     {
-        /*
-        
+        /// <summary>
+        /// Using SharedRepository to verify result of IRepository.Products get accessor.
+        /// </summary>
         [Fact]
-        public void IndexActionModelIsComplete()
+        public void IndexActionModelIsComplete_UsingSharedRepository()
         {
             // Arrange
             var controller = new HomeController();
@@ -25,11 +26,7 @@ namespace WorkingWithVisualStudio.Tests
                 Comparer.Get<Product>((p1, p2) => p1.Name == p2.Name && p1.Price == p2.Price));
         }
 
-        */
-
-        /*
-        
-        class ModelCompleteFakeRepository : IRepository
+        class ModelCompleteFakeRepositoryPricesUpTo275 : IRepository
         {
             public IEnumerable<Product> Products { get; } = new Product[]
             {
@@ -45,12 +42,15 @@ namespace WorkingWithVisualStudio.Tests
             }
         }
 
+        /// <summary>
+        /// Using ModelCompleteFakeRepositoryPricesUpTo275 to verify result of IRepository.Products get accessor.
+        /// </summary>
         [Fact]
-        public void IndexActionModelIsComplete()
+        public void IndexActionModelIsComplete_UsingModelCompleteFakeRepositoryPricesUpTo275()
         {
             // Arrange
             var controller = new HomeController();
-            controller.Repository = new ModelCompleteFakeRepository();
+            controller.Repository = new ModelCompleteFakeRepositoryPricesUpTo275();
 
             // Act
             var model = (controller.Index() as ViewResult)?.ViewData.Model as IEnumerable<Product>;
@@ -59,10 +59,6 @@ namespace WorkingWithVisualStudio.Tests
             Assert.Equal(controller.Repository.Products, model,
                 Comparer.Get<Product>((p1, p2) => p1.Name == p2.Name && p1.Price == p2.Price));
         }
-
-        */
-
-        /*
 
         class ModelCompleteFakeRepositoryPricesUnder50 : IRepository
         {
@@ -80,8 +76,11 @@ namespace WorkingWithVisualStudio.Tests
             }
         }
 
+        /// <summary>
+        /// Using ModelCompleteFakeRepositoryPricesUnder50 to verify result of IRepository.Products get accessor.
+        /// </summary>
         [Fact]
-        public void IndexActionModelIsCompletePricesUnder50()
+        public void IndexActionModelIsCompletePricesUnder50_UsingModelCompleteFakeRepositoryPricesUnder50()
         {
             // Arrange
             var controller = new HomeController();
@@ -95,10 +94,6 @@ namespace WorkingWithVisualStudio.Tests
                 Comparer.Get<Product>((p1, p2) => p1.Name == p2.Name && p1.Price == p2.Price));
         }
 
-        */
-
-        /*
-        
         class ModelCompleteFakeRepository : IRepository
         {
             public IEnumerable<Product> Products { get; set; }
@@ -109,10 +104,13 @@ namespace WorkingWithVisualStudio.Tests
             }
         }
 
+        /// <summary>
+        /// Using ModelCompleteFakeRepository and InlineData to verify result of IRepository.Products get accessor.
+        /// </summary>
         [Theory]
         [InlineData(275, 48.95, 19.50, 24.95)]
         [InlineData(5, 48.95, 19.50, 24.95)]
-        public void IndexActionModelIsComplete(decimal price1, decimal price2, decimal price3, decimal price4)
+        public void IndexActionModelIsComplete_UsingModelCompleteFakeRepositoryAndInlineData(decimal price1, decimal price2, decimal price3, decimal price4)
         {
             // Arrange
             var controller = new HomeController();
@@ -137,10 +135,6 @@ namespace WorkingWithVisualStudio.Tests
                     && p1.Price == p2.Price));
         }
 
-        */
-
-        /*
-        
         private static IEnumerable<Product> getProductsWithPricesUnder50()
         {
             decimal[] prices = new decimal[] { 275, 49.95M, 19.50M, 24.95M };
@@ -159,49 +153,18 @@ namespace WorkingWithVisualStudio.Tests
             new Product { Name = "P4", Price = 24.95M }
         };
 
-        public static IEnumerator<object[]> GetProductsForTest()
+        public static IEnumerable<object[]> GetProductsForTest()
         {
             yield return new object[] { getProductsWithPricesUnder50() };
             yield return new object[] { getProductsWithPricesOver50 };
         }
 
+        /// <summary>
+        /// Using ModelCompleteFakeRepository and MemberData to verify result of IRepository.Products get accessor.
+        /// </summary>
         [Theory]
-        [MemberData(nameof(GetProductsForTest))] // FIX: Specified method is not supported.
-
-        public void IndexActionModelIsComplete(Product[] products)
-        {
-            // Arrange
-            var mock = new Mock<IRepository>();
-            mock.SetupGet(m => m.Products).Returns(products);
-            var controller = new HomeController { Repository = mock.Object };
-
-            // Act
-            var model = (controller.Index() as ViewResult)?.ViewData.Model
-                as IEnumerable<Product>;
-
-            // Assert
-            Assert.Equal(controller.Repository.Products, model,
-                Comparer.Get<Product>((p1, p2) => p1.Name == p2.Name
-                    && p1.Price == p2.Price));
-        }
-    
-        */
-
-        /*
-        
-        class ModelCompleteFakeRepository : IRepository
-        {
-            public IEnumerable<Product> Products { get; set; }
-
-            public void AddProduct(Product p)
-            {
-                // do nothing - not required for test
-            }
-        }
-
-        [Theory]
-        [ClassData(typeof(ProductTestData))] // FIX: Show single unit test per dataset.
-        public void IndexActionModelIsComplete(Product[] products)
+        [MemberData(nameof(GetProductsForTest))]
+        public void IndexActionModelIsComplete_UsingModelCompleteFakeRepositoryAndMemberData(Product[] products)
         {
             // Arrange
             var controller = new HomeController();
@@ -220,9 +183,29 @@ namespace WorkingWithVisualStudio.Tests
                     && p1.Price == p2.Price));
         }
 
-        */
+        /// <summary>
+        /// Using ModelCompleteFakeRepository and ClassData to verify result of IRepository.Products get accessor.
+        /// </summary>
+        [Theory]
+        [ClassData(typeof(ProductTestData))]
+        public void IndexActionModelIsComplete_UsingModelCompleteFakeRepositoryAndClassData(Product[] products)
+        {
+            // Arrange
+            var controller = new HomeController();
+            controller.Repository = new ModelCompleteFakeRepository
+            {
+                Products = products
+            };
 
-        /*
+            // Act
+            var model = (controller.Index() as ViewResult)?.ViewData.Model
+                as IEnumerable<Product>;
+
+            // Assert
+            Assert.Equal(controller.Repository.Products, model,
+                Comparer.Get<Product>((p1, p2) => p1.Name == p2.Name
+                    && p1.Price == p2.Price));
+        }
 
         class PropertyOnceFakeRepository : IRepository
         {
@@ -244,8 +227,11 @@ namespace WorkingWithVisualStudio.Tests
             }
         }
 
+        /// <summary>
+        /// Using PropertyOnceFakeRepository to verify usage of IRepository.Products get accessor.
+        /// </summary>
         [Fact]
-        public void RepositoryPropertyCalledOnce()
+        public void RepositoryPropertyCalledOnce_UsingPropertyOnceFakeRepository()
         {
             // Arrange
             var repo = new PropertyOnceFakeRepository();
@@ -258,11 +244,12 @@ namespace WorkingWithVisualStudio.Tests
             Assert.Equal(1, repo.PropertyCounter);
         }
 
-        */
-
+        /// <summary>
+        /// Using Moq framework to verify result of IRepository.Products get accessor.
+        /// </summary>
         [Theory]
         [ClassData(typeof(ProductTestData))]
-        public void IndexActionModelIsComplete(Product[] products)
+        public void IndexActionModelIsComplete_UsingMoqFramework(Product[] products)
         {
             // Arrange
             var mock = new Mock<IRepository>();
@@ -279,8 +266,11 @@ namespace WorkingWithVisualStudio.Tests
                     && p1.Price == p2.Price));
         }
 
+        /// <summary>
+        /// Using Moq framework to verify usage of IRepository.Products get accessor.
+        /// </summary>
         [Fact]
-        public void RepositoryPropertyCalledOnce()
+        public void RepositoryPropertyCalledOnce_UsingMoqFramework()
         {
             // Arrange
             var mock = new Mock<IRepository>();
