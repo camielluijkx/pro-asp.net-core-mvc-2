@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore;
+﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 
-namespace SportsStore {
-    public class Program {
-        public static void Main(string[] args) {
+namespace SportsStore
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
             BuildWebHost(args).Run();
         }
 
@@ -18,7 +14,7 @@ namespace SportsStore {
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
                 .UseDefaultServiceProvider(options =>
-                    options.ValidateScopes = false)
+                    options.ValidateScopes = false) // [TODO] why is scope verification disabled?
                 .Build();
     }
 }

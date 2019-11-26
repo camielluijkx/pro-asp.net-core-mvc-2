@@ -1,10 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using System;
-using System.Collections.Generic;
 
 namespace SportsStore.Migrations
 {
+    /// <summary>
+    /// Initial migration created with command: dotnet ef migrations add Initial
+    ///     [TODO] how to create a migration in case of update?
+    ///     [TODO] purpose of a model snapshot and how to use them?
+    /// </summary>
     public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
