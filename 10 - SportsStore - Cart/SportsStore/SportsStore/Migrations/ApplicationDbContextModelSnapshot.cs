@@ -2,14 +2,14 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.EntityFrameworkCore.Storage.Internal;
 using SportsStore.Models;
-using System;
 
 namespace SportsStore.Migrations
 {
+    /// <summary>
+    /// Database snapshot created automatically every time a new migration is added.
+    /// </summary>
+    /// <remarks>Is used to work out how database differs from previous database version to generate new migration.</remarks>
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {

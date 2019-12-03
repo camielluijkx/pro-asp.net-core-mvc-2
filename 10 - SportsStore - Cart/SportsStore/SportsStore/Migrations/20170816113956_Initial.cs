@@ -1,10 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using System;
-using System.Collections.Generic;
 
 namespace SportsStore.Migrations
 {
+    /// <summary>
+    /// Database migration created with command: dotnet ef migrations add Initial
+    /// </summary>
+    /// <remarks>
+    /// Database can be removed with command: dotnet ef database drop --force
+    /// Database can be updated with command: dotnet ef database update
+    /// </remarks>
     public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)

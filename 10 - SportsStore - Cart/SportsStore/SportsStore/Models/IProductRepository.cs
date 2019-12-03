@@ -1,9 +1,10 @@
 ﻿using System.Linq;
 
-namespace SportsStore.Models {
+namespace SportsStore.Models
+{
 
-    public interface IProductRepository {
-
+    public interface IProductRepository
+    {
         IQueryable<Product> Products { get; }
     }
 }
