@@ -7,32 +7,32 @@ namespace SportsStore.Controllers
 {
     public class CartController : Controller
     {
-        private IProductRepository repository;
-        private Cart cart;
+        private readonly IProductRepository _ProductRepository;
+        private readonly Cart _cart;
 
-        public CartController(IProductRepository repo, Cart cartService)
+        public CartController(IProductRepository productRepository, Cart cart)
         {
-            repository = repo;
-            cart = cartService;
+            _ProductRepository = productRepository;
+            _cart = cart;
         }
 
         public ViewResult Index(string returnUrl)
         {
             return View(new CartIndexViewModel
             {
-                Cart = cart,
+                Cart = _cart,
                 ReturnUrl = returnUrl
             });
         }
 
         public RedirectToActionResult AddToCart(int productId, string returnUrl)
         {
-            Product product = repository.Products
+            Product product = _ProductRepository.Products
                 .FirstOrDefault(p => p.ProductID == productId);
 
             if (product != null)
             {
-                cart.AddItem(product, 1);
+                _cart.AddItem(product, 1);
             }
 
             return RedirectToAction("Index", new { returnUrl });
@@ -40,12 +40,12 @@ namespace SportsStore.Controllers
 
         public RedirectToActionResult RemoveFromCart(int productId, string returnUrl)
         {
-            Product product = repository.Products
+            Product product = _ProductRepository.Products
                 .FirstOrDefault(p => p.ProductID == productId);
 
             if (product != null)
             {
-                cart.RemoveLine(product);
+                _cart.RemoveLine(product);
             }
 
             return RedirectToAction("Index", new { returnUrl });
