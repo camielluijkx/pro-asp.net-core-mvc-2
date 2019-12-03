@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SportsStore.Models;
+using SportsStore.Models.ViewModels;
 using System.Linq;
 
 namespace SportsStore.Controllers
@@ -14,6 +15,13 @@ namespace SportsStore.Controllers
             _orderRepository = orderRepository;
             _cart = cart;
         }
+
+        [HttpGet]
+        public ViewResult List() => View(
+            new OrdersListViewModel
+            {
+                Orders = _orderRepository.Orders
+            });
 
         [HttpGet]
         public ViewResult Checkout() => View(new Order());

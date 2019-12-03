@@ -68,6 +68,7 @@ namespace SportsStore
                 // e.g. http://localhost:53406/?category=Soccer&productPage=1
                 // e.g. http://localhost:53406/Product/?category=Soccer&productPage=1
                 // e.g. http://localhost:53406/Product/List/?category=Soccer&productPage=1
+                // e.g. http://localhost:53406/Order/List
                 // e.g. http://localhost:53406/Order/Checkout
                 // e.g. http://localhost:53406/Order/Completed
                 routes.MapRoute(

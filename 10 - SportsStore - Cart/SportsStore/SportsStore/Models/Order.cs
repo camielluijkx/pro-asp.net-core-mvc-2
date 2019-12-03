@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace SportsStore.Models
@@ -34,5 +36,18 @@ namespace SportsStore.Models
         public string Country { get; set; }
 
         public bool GiftWrap { get; set; }
+
+        public string Description
+        {
+            get
+            {
+                if (!Lines.Any())
+                {
+                    return "No description for order yet!";
+                }
+
+                return $"{OrderID}: {String.Join(", ", Lines.Select(l => l.Description))}";
+            }
+        }
     }
 }

@@ -1,0 +1,6 @@
+﻿@model OrdersListViewModel
+
+@foreach (var o in Model.Orders)
+{
+    @Html.Partial("OrderSummary", o)
+}

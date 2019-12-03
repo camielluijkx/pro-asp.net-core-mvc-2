@@ -16,8 +16,8 @@ namespace SportsStore.Controllers
             _productRepository = productRepository;
         }
 
-        public ViewResult List(string category, int productPage = 1)
-            => View(new ProductsListViewModel
+        public ViewResult List(string category, int productPage = 1) => View(
+            new ProductsListViewModel
             {
                 Products = _productRepository.Products
                     .Where(p => category == null || p.Category == category)
