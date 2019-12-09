@@ -2,17 +2,21 @@
 using System.Linq;
 using SportsStore.Models;
 
-namespace SportsStore.Components {
-
-    public class NavigationMenuViewComponent : ViewComponent {
+namespace SportsStore.Components
+{
+    public class NavigationMenuViewComponent : ViewComponent
+    {
         private IProductRepository repository;
 
-        public NavigationMenuViewComponent(IProductRepository repo) {
+        public NavigationMenuViewComponent(IProductRepository repo)
+        {
             repository = repo;
         }
 
-        public IViewComponentResult Invoke() {
+        public IViewComponentResult Invoke()
+        {
             ViewBag.SelectedCategory = RouteData?.Values["category"];
+
             return View(repository.Products
                 .Select(x => x.Category)
                 .Distinct()
