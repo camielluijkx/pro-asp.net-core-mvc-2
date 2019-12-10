@@ -1,14 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace SportsStore.Models {
-
-    public class Order {
-
-        [BindNever]
+namespace SportsStore.Models
+{
+    public class Order
+    {
+        [BindNever] // prevents supplying a value for this property in an HTTP request
         public int OrderID { get; set; }
-        [BindNever]
+
+        [BindNever] // prevents supplying a value for this property in an HTTP request
         public ICollection<CartLine> Lines { get; set; }
 
         [BindNever]
@@ -19,7 +20,9 @@ namespace SportsStore.Models {
 
         [Required(ErrorMessage = "Please enter the first address line")]
         public string Line1 { get; set; }
+
         public string Line2 { get; set; }
+
         public string Line3 { get; set; }
 
         [Required(ErrorMessage = "Please enter a city name")]

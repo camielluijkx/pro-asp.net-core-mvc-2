@@ -1,50 +1,78 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SportsStore.Models;
 using System.Linq;
-using Microsoft.AspNetCore.Authorization;
 
-namespace SportsStore.Controllers {
-
+namespace SportsStore.Controllers
+{
     [Authorize]
-    public class AdminController : Controller {
-        private IProductRepository repository;
+    public class AdminController : Controller
+    {
+        private readonly IProductRepository _productRepository;
 
-        public AdminController(IProductRepository repo) {
-            repository = repo;
+        public AdminController(IProductRepository productRepository)
+        {
+            _productRepository = productRepository;
         }
 
-        public ViewResult Index() => View(repository.Products);
+        public ViewResult Index()
+        {
+            var products = _productRepository.Products;
 
-        public ViewResult Edit(int productId) =>
-            View(repository.Products
-                .FirstOrDefault(p => p.ProductID == productId));
-        
+            return View(products);
+        }
+
+        public ViewResult Edit(int productId)
+        {
+            var product = _productRepository.Products
+                .FirstOrDefault(p => p.ProductID == productId);
+
+            return View(product);
+        }
+
         [HttpPost]
-        public IActionResult Edit(Product product) {
-            if (ModelState.IsValid) {
-                repository.SaveProduct(product);
+        public IActionResult Edit(Product product)
+        {
+            if (ModelState.IsValid)
+            {
+                _productRepository.SaveProduct(product);
+
                 TempData["message"] = $"{product.Name} has been saved";
+
                 return RedirectToAction("Index");
-            } else {
+            }
+            else
+            {
                 // there is something wrong with the data values
                 return View(product);
             }
         }
 
-        public ViewResult Create() => View("Edit", new Product());
+        public ViewResult Create()
+        {
+            var product = new Product();
+
+            return View("Edit", product);
+        }
 
         [HttpPost]
-        public IActionResult Delete(int productId) {
-            Product deletedProduct = repository.DeleteProduct(productId);
-            if (deletedProduct != null) {
-                TempData["message"] = $"{deletedProduct.Name} was deleted";
+        public IActionResult Delete(int productId)
+        {
+            Product product = _productRepository.DeleteProduct(productId);
+
+            if (product != null)
+            {
+                TempData["message"] = $"{product.Name} was deleted";
             }
+
             return RedirectToAction("Index");
         }
 
         [HttpPost]
-        public IActionResult SeedDatabase() {
+        public IActionResult SeedDatabase()
+        {
             SeedData.EnsurePopulated(HttpContext.RequestServices);
+
             return RedirectToAction(nameof(Index));
         }
     }

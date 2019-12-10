@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SportsStore.Models.ViewModels {
-
-    public class LoginModel {
-
+namespace SportsStore.Models.ViewModels
+{
+    public class LoginModel
+    {
         [Required]
         public string Name { get; set; }
 

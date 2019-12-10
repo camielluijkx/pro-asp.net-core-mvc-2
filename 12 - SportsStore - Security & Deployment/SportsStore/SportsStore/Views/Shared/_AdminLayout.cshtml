@@ -5,7 +5,8 @@
     <link rel="stylesheet" asp-href-include="lib/bootstrap/dist/css/*.min.css" />
     <title>@ViewBag.Title</title>
     <style>
-        .input-validation-error {
+        .input-validation-error 
+        {
             border-color: red;
             background-color: #fee;
         }
@@ -25,7 +26,8 @@
                asp-action="Logout" asp-controller="Account">Log Out</a>
         </div>
     </div>
-    @if (TempData["message"] != null) {
+    @if (TempData["message"] != null)
+    {
         <div class="alert alert-success mt-1">@TempData["message"]</div>
     }
     @RenderBody()

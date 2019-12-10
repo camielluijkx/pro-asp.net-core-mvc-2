@@ -1,17 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SportsStore.Models;
 
-namespace SportsStore.Components {
+namespace SportsStore.Components
+{
+    public class CartSummaryViewComponent : ViewComponent
+    {
+        private readonly Cart _cart;
 
-    public class CartSummaryViewComponent : ViewComponent {
-        private Cart cart;
-
-        public CartSummaryViewComponent(Cart cartService) {
-            cart = cartService;
+        public CartSummaryViewComponent(Cart cart)
+        {
+            _cart = cart;
         }
 
-        public IViewComponentResult Invoke() {
-            return View(cart);
+        public IViewComponentResult Invoke()
+        {
+            return View(_cart);
         }
     }
 }

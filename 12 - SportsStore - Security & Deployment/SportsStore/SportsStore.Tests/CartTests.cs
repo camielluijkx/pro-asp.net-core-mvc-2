@@ -1,14 +1,14 @@
-﻿using System.Linq;
-using SportsStore.Models;
+﻿using SportsStore.Models;
+using System.Linq;
 using Xunit;
 
-namespace SportsStore.Tests {
-
-    public class CartTests {
-
+namespace SportsStore.Tests
+{
+    public class CartTests
+    {
         [Fact]
-        public void Can_Add_New_Lines() {
-
+        public void Can_Add_New_Lines()
+        {
             // Arrange - create some test products
             Product p1 = new Product { ProductID = 1, Name = "P1" };
             Product p2 = new Product { ProductID = 2, Name = "P2" };
@@ -28,7 +28,8 @@ namespace SportsStore.Tests {
         }
 
         [Fact]
-        public void Can_Add_Quantity_For_Existing_Lines() {
+        public void Can_Add_Quantity_For_Existing_Lines()
+        {
             // Arrange - create some test products
             Product p1 = new Product { ProductID = 1, Name = "P1" };
             Product p2 = new Product { ProductID = 2, Name = "P2" };
@@ -40,8 +41,7 @@ namespace SportsStore.Tests {
             target.AddItem(p1, 1);
             target.AddItem(p2, 1);
             target.AddItem(p1, 10);
-            CartLine[] results = target.Lines
-                .OrderBy(c => c.Product.ProductID).ToArray();
+            CartLine[] results = target.Lines.OrderBy(c => c.Product.ProductID).ToArray();
 
             // Assert
             Assert.Equal(2, results.Length);
@@ -50,7 +50,8 @@ namespace SportsStore.Tests {
         }
 
         [Fact]
-        public void Can_Remove_Line() {
+        public void Can_Remove_Line()
+        {
             // Arrange - create some test products
             Product p1 = new Product { ProductID = 1, Name = "P1" };
             Product p2 = new Product { ProductID = 2, Name = "P2" };
@@ -73,7 +74,8 @@ namespace SportsStore.Tests {
         }
 
         [Fact]
-        public void Calculate_Cart_Total() {
+        public void Calculate_Cart_Total()
+        {
             // Arrange - create some test products
             Product p1 = new Product { ProductID = 1, Name = "P1", Price = 100M };
             Product p2 = new Product { ProductID = 2, Name = "P2", Price = 50M };
@@ -92,7 +94,8 @@ namespace SportsStore.Tests {
         }
 
         [Fact]
-        public void Can_Clear_Contents() {
+        public void Can_Clear_Contents()
+        {
             // Arrange - create some test products
             Product p1 = new Product { ProductID = 1, Name = "P1", Price = 100M };
             Product p2 = new Product { ProductID = 2, Name = "P2", Price = 50M };
@@ -110,6 +113,5 @@ namespace SportsStore.Tests {
             // Assert
             Assert.Equal(0, target.Lines.Count());
         }
-
     }
 }
