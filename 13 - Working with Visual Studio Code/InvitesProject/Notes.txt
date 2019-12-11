@@ -1,0 +1,38 @@
+#check nodejs version:
+node -v
+
+#check git version:
+git --version
+
+#install bower:
+npm install -g bower@1.8.0
+
+#check dotnet core version:
+dotnet --version
+
+#create empty donnet core web application:
+dotnet new web --language C# --framework netcoreapp2.0
+
+#install client-side packages:
+bower install
+
+#install server-side packages:
+dotnet restore
+
+#run dotnet core application:
+dotnet run
+
+#create database migration:
+dotnet ef migrations add Initial
+
+#apply database migration:
+dotnet ef database update
+
+#create unit test project:
+dotnet new xunit --language C# --framework netcoreapp2.0
+
+#add project reference:
+dotnet add referecne ../PartyInvites/PartyInvites.csproj
+
+#run unit tests:
+dotnet test
