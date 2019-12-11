@@ -1,8 +1,7 @@
 {
-    "name": "PartyInvites",
-    "private": true,
-    "dependencies": {
-      "bootstrap": "4.0.0-alpha.6"
-    }
+  "name": "PartyInvites",
+  "private": true,
+  "dependencies": {
+    "bootstrap": "4.0.0-alpha.6"
   }
-  
+}

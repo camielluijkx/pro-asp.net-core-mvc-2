@@ -19,7 +19,8 @@
                 <tr><th>Name</th><th>Email</th><th>Phone</th></tr>
             </thead>
             <tbody>
-                @foreach (PartyInvites.Models.GuestResponse r in Model) {
+                @foreach (PartyInvites.Models.GuestResponse r in Model)
+                {
                     <tr><td>@r.Name</td><td>@r.Email</td><td>@r.Phone</td></tr>
                 }
             </tbody>

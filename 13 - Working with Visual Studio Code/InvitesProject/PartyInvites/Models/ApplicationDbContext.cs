@@ -1,14 +1,19 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace PartyInvites.Models {
-    public class ApplicationDbContext : DbContext {
+namespace PartyInvites.Models
+{
+    public class ApplicationDbContext : DbContext
+    {
+        public ApplicationDbContext()
+        {
 
-        public ApplicationDbContext() {}
+        }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder builder) {
+        protected override void OnConfiguring(DbContextOptionsBuilder builder)
+        {
             builder.UseSqlite("Filename=./PartyInvites.db");
         }
-    
-        public DbSet<GuestResponse> Invites {get; set;}
+
+        public DbSet<GuestResponse> Invites { get; set; }
     }
 }
