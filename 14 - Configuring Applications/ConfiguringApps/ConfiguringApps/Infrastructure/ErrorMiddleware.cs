@@ -4,6 +4,9 @@ using System.Threading.Tasks;
 
 namespace ConfiguringApps.Infrastructure
 {
+    /// <summary>
+    /// Response-Editing Middleware
+    /// </summary>
     public class ErrorMiddleware
     {
         private readonly RequestDelegate _requestDelegate;
