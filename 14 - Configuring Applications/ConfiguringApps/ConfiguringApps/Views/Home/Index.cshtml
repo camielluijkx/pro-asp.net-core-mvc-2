@@ -1,4 +1,5 @@
 ﻿@model Dictionary<string, string>
+
 @{ Layout = null; }
 
 <!DOCTYPE html>
@@ -10,7 +11,8 @@
 </head>
 <body class="p-1">
     <table class="table table-condensed table-bordered table-striped">
-        @foreach (var kvp in Model) {
+        @foreach (var kvp in Model)
+        {
             <tr><th>@kvp.Key</th><td>@kvp.Value</td></tr>
         }
     </table>

@@ -1,19 +1,28 @@
-﻿using System.Linq;
+﻿using Microsoft.AspNetCore.Http;
+using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 
-namespace ConfiguringApps.Infrastructure {
+namespace ConfiguringApps.Infrastructure
+{
+    /// <summary>
+    /// Request-Editing Middleware
+    /// </summary>
+    public class BrowserTypeMiddleware
+    {
+        private readonly RequestDelegate _requestDelegate;
 
-    public class BrowserTypeMiddleware {
-        private RequestDelegate nextDelegate;
+        public BrowserTypeMiddleware(RequestDelegate requestDelegate)
+        {
+            _requestDelegate = requestDelegate;
+        }
 
-        public BrowserTypeMiddleware(RequestDelegate next) => nextDelegate = next;
-
-        public async Task Invoke(HttpContext httpContext) {
+        public async Task Invoke(HttpContext httpContext)
+        {
             httpContext.Items["EdgeBrowser"]
                 = httpContext.Request.Headers["User-Agent"]
                     .Any(v => v.ToLower().Contains("edge"));
-            await nextDelegate.Invoke(httpContext);
+
+            await _requestDelegate.Invoke(httpContext);
         }
     }
 }

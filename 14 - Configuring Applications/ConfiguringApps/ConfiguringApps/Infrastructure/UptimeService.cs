@@ -1,11 +1,13 @@
 ﻿using System.Diagnostics;
 
-namespace ConfiguringApps.Infrastructure {
-
-    public class UptimeService {
+namespace ConfiguringApps.Infrastructure
+{
+    public class UptimeService
+    {
         private Stopwatch timer;
 
-        public UptimeService() {
+        public UptimeService()
+        {
             timer = Stopwatch.StartNew();
         }
 

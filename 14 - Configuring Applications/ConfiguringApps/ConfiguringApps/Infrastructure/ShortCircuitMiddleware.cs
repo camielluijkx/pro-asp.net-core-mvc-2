@@ -1,19 +1,30 @@
-﻿using System.Linq;
+﻿using Microsoft.AspNetCore.Http;
+using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 
-namespace ConfiguringApps.Infrastructure {
+namespace ConfiguringApps.Infrastructure
+{
+    /// <summary>
+    /// Short-Circuiting Middleware
+    /// </summary>
+    public class ShortCircuitMiddleware
+    {
+        private readonly RequestDelegate _requestDelegate;
 
-    public class ShortCircuitMiddleware {
-        private RequestDelegate nextDelegate;
+        public ShortCircuitMiddleware(RequestDelegate requestDelegate)
+        {
+            _requestDelegate = requestDelegate;
+        }
 
-        public ShortCircuitMiddleware(RequestDelegate next) => nextDelegate = next;
-
-        public async Task Invoke(HttpContext httpContext) {
-            if (httpContext.Items["EdgeBrowser"] as bool? == true) {
+        public async Task Invoke(HttpContext httpContext)
+        {
+            if (httpContext.Items["EdgeBrowser"] as bool? == true)
+            {
                 httpContext.Response.StatusCode = 403;
-            } else {
-                await nextDelegate.Invoke(httpContext);
+            }
+            else
+            {
+                await _requestDelegate.Invoke(httpContext);
             }
         }
     }

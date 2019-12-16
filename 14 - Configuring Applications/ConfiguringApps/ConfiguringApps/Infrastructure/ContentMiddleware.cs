@@ -1,25 +1,34 @@
-﻿using System.Text;
+﻿using Microsoft.AspNetCore.Http;
+using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 
-namespace ConfiguringApps.Infrastructure {
+namespace ConfiguringApps.Infrastructure
+{
+    /// <summary>
+    /// Content-Generating Middleware
+    /// </summary>
+    public class ContentMiddleware
+    {
+        private readonly RequestDelegate _requestDelegate;
+        private readonly UptimeService _uptimeService;
 
-    public class ContentMiddleware {
-        private RequestDelegate nextDelegate;
-        private UptimeService uptime;
-
-        public ContentMiddleware(RequestDelegate next, UptimeService up) {
-            nextDelegate = next;
-            uptime = up;
+        public ContentMiddleware(RequestDelegate requestDelegate, UptimeService uptimeService)
+        {
+            _requestDelegate = requestDelegate;
+            _uptimeService = uptimeService;
         }
 
-        public async Task Invoke(HttpContext httpContext) {
-            if (httpContext.Request.Path.ToString().ToLower() == "/middleware") {
+        public async Task Invoke(HttpContext httpContext)
+        {
+            if (httpContext.Request.Path.ToString().ToLower() == "/middleware")
+            {
                 await httpContext.Response.WriteAsync(
-                    "This is from the content middleware " +
-                        $"(uptime: {uptime.Uptime}ms)", Encoding.UTF8);
-            } else {
-                await nextDelegate.Invoke(httpContext);
+                    $"This is from the content middleware (uptime: {_uptimeService.Uptime}ms)"
+                    , Encoding.UTF8);
+            }
+            else
+            {
+                await _requestDelegate.Invoke(httpContext);
             }
         }
     }

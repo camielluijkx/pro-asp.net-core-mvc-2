@@ -1,34 +1,47 @@
-﻿using System.Collections.Generic;
+﻿using ConfiguringApps.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
-using ConfiguringApps.Infrastructure;
 using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
 
-namespace ConfiguringApps.Controllers {
+namespace ConfiguringApps.Controllers
+{
+    public class HomeController : Controller
+    {
+        private readonly UptimeService _uptimeService;
+        private readonly ILogger<HomeController> _logger;
 
-    public class HomeController : Controller {
-        private UptimeService uptime;
-        private ILogger<HomeController> logger;
-
-        public HomeController(UptimeService up, ILogger<HomeController> log) {
-            uptime = up;
-            logger = log;
+        public HomeController(UptimeService uptimeService, ILogger<HomeController> logger)
+        {
+            _uptimeService = uptimeService;
+            _logger = logger;
         }
 
-        public ViewResult Index(bool throwException = false) {
-            logger.LogDebug($"Handled {Request.Path} at uptime {uptime.Uptime}");
+        public ViewResult Index(bool throwException = false)
+        {
+            _logger.LogDebug($"Handled {Request.Path} at uptime {_uptimeService.Uptime}");
 
-            if (throwException) {
+            if (throwException)
+            {
                 throw new System.NullReferenceException();
             }
-            return View(new Dictionary<string, string> {
+
+            var model = new Dictionary<string, string>
+            {
                 ["Message"] = "This is the Index action",
-                ["Uptime"] = $"{uptime.Uptime}ms"
-            });
+                ["Uptime"] = $"{_uptimeService.Uptime}ms"
+            };
+
+            return View(model);
         }
 
-        public ViewResult Error() => View(nameof(Index),
-            new Dictionary<string, string> {
+        public ViewResult Error()
+        {
+            var model = new Dictionary<string, string>
+            {
                 ["Message"] = "This is the Error action"
-            });
+            };
+
+            return View(nameof(Index), model);
+        }
     }
 }
