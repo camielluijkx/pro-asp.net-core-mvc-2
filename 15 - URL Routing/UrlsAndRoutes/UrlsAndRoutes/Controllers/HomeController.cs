@@ -21,7 +21,7 @@ namespace UrlsAndRoutes.Controllers
             Result result = new Result
             {
                 Controller = nameof(HomeController),
-                Action = nameof(CustomVariable),
+                Action = nameof(CustomVariable)
             };
             result.Data["Id"] = id ?? "<no value>";
 

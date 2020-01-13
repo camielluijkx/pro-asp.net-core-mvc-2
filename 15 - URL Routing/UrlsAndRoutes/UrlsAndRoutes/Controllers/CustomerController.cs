@@ -3,7 +3,10 @@ using UrlsAndRoutes.Models;
 
 namespace UrlsAndRoutes.Controllers
 {
-    //[Route("app/[controller]/actions/[action]/{id:weekday?}")]
+    // http://localhost:52423/Customer/List                         => 404
+    // http://localhost:52423/app/Customer/actions/Index            => Customer/Index
+    // http://localhost:52423/app/Customer/actions/List/Fri         => Customer/List (Id = Fri)
+    [Route("app/[controller]/actions/[action]/{id:weekday?}")]
     public class CustomerController : Controller
     {
         public ViewResult Index()
@@ -22,7 +25,7 @@ namespace UrlsAndRoutes.Controllers
             Result result = new Result
             {
                 Controller = nameof(HomeController),
-                Action = nameof(List),
+                Action = nameof(List)
             };
             result.Data["id"] = id ?? "<no value>";
             result.Data["catchall"] = RouteData.Values["catchall"];

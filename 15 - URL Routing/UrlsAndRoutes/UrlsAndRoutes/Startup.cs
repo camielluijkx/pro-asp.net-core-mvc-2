@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.AspNetCore.Routing.Constraints;
 using Microsoft.Extensions.DependencyInjection;
 using UrlsAndRoutes.Infrastructure;
 
@@ -248,10 +249,114 @@ namespace UrlsAndRoutes
         private void mapRoutes11(IRouteBuilder routes)
         {
             // http://localhost:52423/Customer/List                         => Customer/List
-            // http://localhost:52423/Customer/List/Hellow/1/2/3            => Customer/List (CatchAll = 1/2/3)
+            // http://localhost:52423/Customer/List/Hello/1/2/3             => Customer/List (CatchAll = 1/2/3)
             routes.MapRoute(
                 name: "default",
                 template: "{controller=Home}/{action=Index}/{id?}/{*catchall}");
+        }
+
+        private void mapRoutes12(IRouteBuilder routes)
+        {
+            // http://localhost:52423                                       => Home/Index
+            // http://localhost:52423/Home/CustomVariable/Hello             => 404
+            // http://localhost:52423/Home/CustomVariable/1                 => Home/Index (Id = 1)
+            // http://localhost:52423/Home/CustomVariable/1/2               => 404
+            routes.MapRoute(
+                name: "default",
+                template: "{controller=Home}/{action=Index}/{id:int?}");
+        }
+
+        private void mapRoutes13(IRouteBuilder routes)
+        {
+            // http://localhost:52423                                       => Home/Index
+            // http://localhost:52423/Home/CustomVariable/Hello             => 404
+            // http://localhost:52423/Home/CustomVariable/1                 => Home/Index (Id = 1)
+            // http://localhost:52423/Home/CustomVariable/1/2               => 404
+            routes.MapRoute(
+                name: "default",
+                template: "{controller}/{action}/{id?}",
+                defaults: new { controller = "Home", action = "Index" },
+                constraints: new { id = new IntRouteConstraint() });
+        }
+
+        private void mapRoutes14(IRouteBuilder routes)
+        {
+            // http://localhost:52423                                       => Home/Index
+            // http://localhost:52423/Home                                  => Home/Index
+            routes.MapRoute(
+                name: "default",
+                template: "{controller:regex(^H.*)=Home}/{action=Index}/{id?}"); // will only match URL's where controller segment starts with H
+        }
+
+        private void mapRoutes15(IRouteBuilder routes)
+        {
+            // http://localhost:52423                                       => Home/Index
+            // http://localhost:52423/Home                                  => Home/Index
+            routes.MapRoute(
+                name: "default",
+                template: "{controller:regex(^H.*)=Home}/{action:regex(^Index$|^About$)=Index}/{id?}"); // will only match URL's where controller segment starts with H and action is Index or About
+        }
+
+        private void mapRoutes16(IRouteBuilder routes)
+        {
+            // http://localhost:52423/Home/Index/9                          => 404
+            // http://localhost:52423/Home/Index/10                         => Home/Index (Id = 10)
+            // ...
+            // http://localhost:52423/Home/Index/20                         => Home/Index (Id = 20)
+            // http://localhost:52423/Home/Index/21                         => 404
+            routes.MapRoute(
+                name: "default",
+                template: "{controller=Home}/{action=Index}/{id:range(10,20)?}");
+        }
+
+        private void mapRoutes17(IRouteBuilder routes)
+        {
+            // http://localhost:52423/Home/Index/1                          => 404
+            // http://localhost:52423/Home/Index/1abcde                     => 404
+            // http://localhost:52423/Home/Index/abcdef                     => Home/Index (Id = abcdef)
+            routes.MapRoute(
+                name: "default",
+                template: "{controller=Home}/{action=Index}/{id:alpha:minlength(6)?}");
+        }
+
+        private void mapRoutes18(IRouteBuilder routes)
+        {
+            // http://localhost:52423/Home/Index/1                          => 404
+            // http://localhost:52423/Home/Index/1abcde                     => 404
+            // http://localhost:52423/Home/Index/abcdef                     => Home/Index (Id = abcdef)
+            routes.MapRoute(
+                name: "default",
+                template: "{controller}/{action}/{id?}",
+                defaults: new { controller = "Home", action = "Index" },
+                constraints: new { id = new CompositeRouteConstraint(
+                    new IRouteConstraint[] 
+                    {
+                        new AlphaRouteConstraint(),
+                        new MinLengthRouteConstraint(6)
+                    })
+                });
+        }
+
+        private void mapRoutes19(IRouteBuilder routes)
+        {
+            // http://localhost:52423/Customer/List                         => 404
+            // http://localhost:52423/Customer/List/Abc                     => 404
+            // http://localhost:52423/Customer/List/Fri                     => Customer/List (Id = Fri)
+            routes.MapRoute(
+                name: "default",
+                template: "{controller}/{action}/{id?}",
+                defaults: new { controller = "Home", action = "Index" },
+                constraints: new { id = new WeekDayConstraint() });
+        }
+
+        private void mapRoutes20(IRouteBuilder routes)
+        {
+            // http://localhost:52423/Customer/List                         => 404
+            // http://localhost:52423/Customer/List/Abc                     => 404
+            // http://localhost:52423/Customer/List/Fri                     => Customer/List (Id = Fri)
+            routes.MapRoute(
+                name: "default",
+                template: "{controller=Home}/{action=Index}/{id:weekday?}");
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -260,8 +365,8 @@ namespace UrlsAndRoutes
             app.UseStatusCodePages();
             app.UseStaticFiles();
 
-            app.UseMvc(routes =>
-            {
+            //app.UseMvc(routes =>
+            //{
                 //mapRoutes1(routes);
                 //mapRoutes2(routes);
                 //mapRoutes3(routes);
@@ -271,10 +376,19 @@ namespace UrlsAndRoutes
                 //mapRoutes7(routes);
                 //mapRoutes8(routes);
                 //mapRoutes10(routes);
-                mapRoutes11(routes);
-            });
+                //mapRoutes11(routes);
+                //mapRoutes12(routes);
+                //mapRoutes13(routes);
+                //mapRoutes14(routes);
+                //mapRoutes15(routes);
+                //mapRoutes16(routes);
+                //mapRoutes17(routes);
+                //mapRoutes18(routes);
+                //mapRoutes19(routes);
+                //mapRoutes20(routes);
+            //});
 
-            //app.UseMvcWithDefaultRoute();
+            app.UseMvcWithDefaultRoute();
         }
     }
 }
