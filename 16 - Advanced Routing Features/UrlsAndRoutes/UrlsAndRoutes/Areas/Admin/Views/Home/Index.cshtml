@@ -1,4 +1,5 @@
 ﻿@model Person[]
+
 @{ Layout = null; }
 
 <!DOCTYPE html>
@@ -11,11 +12,19 @@
 <body class="m-1 p-1">
     <table class="table table-bordered table-striped table-sm">
         <tr><th>Name</th><th>City</th></tr>
-        @foreach (Person p in Model) {
+        @foreach (Person p in Model)
+        {
             <tr><td>@p.Name</td><td>@p.City</td></tr>
         }
     </table>
-    <a asp-action="Index" asp-controller="Home">Link</a>
-    <a asp-action="Index" asp-controller="Home" asp-route-area="">Link</a>
+
+    <p>
+        <a asp-action="Index" asp-controller="Home">Link: /Admin</a>
+    </p>
+
+    <p>
+        <a asp-action="Index" asp-controller="Home" asp-route-area="">Link: /</a>
+    </p>
+
 </body>
 </html>

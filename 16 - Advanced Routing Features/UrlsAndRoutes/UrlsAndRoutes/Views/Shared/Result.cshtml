@@ -1,4 +1,5 @@
 ﻿@model Result
+
 @{ Layout = null; }
 
 <!DOCTYPE html>
@@ -12,17 +13,81 @@
     <table class="table table-bordered table-striped table-sm">
         <tr><th>Controller:</th><td>@Model.Controller</td></tr>
         <tr><th>Action:</th><td>@Model.Action</td></tr>
-        @foreach (string key in Model.Data.Keys) {
+        @foreach (string key in Model.Data.Keys)
+        {
             <tr><th>@key :</th><td>@Model.Data[key]</td></tr>
         }
     </table>
-    <a asp-route-legacyurl="/articles/Windows_3.1_Overview.html"
-       class="btn btn-primary">
-        This is an outgoing URL
-    </a>
+
     <p>
-        URL: @Url.Action(null, null,
-           new { legacyurl = "/articles/Windows_3.1_Overview.html" })
+        <a href="/Home/CustomVariable">
+            This is an outgoing URL: /Home/CustomVariable
+        </a>
     </p>
+
+    <p>
+        <a asp-action="CustomVariable">
+            This is an outgoing URL: /Home/CustomVariable, App/DoCustomVariable
+        </a>
+    </p>
+
+    <p>
+        <a asp-controller="Admin" asp-action="Index">
+            This is an outgoing URL: /Admin
+        </a>
+    </p>
+
+    <p>
+        <a asp-controller="Customer" asp-action="Index">
+            This is an outgoing URL: /app/Customer/actions/Index
+        </a>
+    </p>
+
+    <p>
+        <a asp-controller="Home" asp-action="Index" asp-route-id="Hello">
+            This is an outgoing URL: /App/DoIndex?id=Hello, /Home/Index/Hello
+        </a>
+    </p>
+
+    <p>
+        <a asp-controller="Home" asp-action="Index" asp-route-page="789">
+            Segment variable reuse: /Home/Index/Red/100 => /Home/Index/Red/789
+        </a>
+    </p>
+
+    <p>
+        <a asp-controller="Home" asp-action="Index" asp-route-id="Hello" asp-protocol="https" asp-host="myserver.mydomain.com" asp-fragment="myFragment">
+            This is an outgoing URL: https://myserver.mydomain.com/Home/Index/Hello#myFragment
+        </a>
+    </p>
+
+    <p>
+        <a asp-route="out">
+            This is an outgoing URL: /outbound
+        </a>
+    </p>
+
+    <p>
+        URL: @Url.Action("CustomVariable", "Home", new { id = 100 })
+    </p>
+
+    <p>
+        <a asp-route-legacyurl="/articles/Windows_3.1_Overview.html">
+            This is an outgoing URL: /articles/Windows_3.1_Overview.html
+        </a>
+    </p>
+
+    <p>
+        URL: @Url.Action(null, null, new { legacyurl = "/articles/Windows_3.1_Overview.html" })
+    </p>
+
+    <p>
+        <a asp-action="Index" asp-controller="Home">Link: /</a>
+    </p>
+
+    <p>
+        <a asp-action="Index" asp-controller="Admin">Link: /Admin</a>
+    </p>
+
 </body>
 </html>
