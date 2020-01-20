@@ -1,4 +1,5 @@
 ﻿@model IDictionary<string, string>
+
 @{ Layout = null; }
 
 <!DOCTYPE html>
@@ -11,7 +12,8 @@
 <body class="m-1 p-1">
     <table class="table table-bordered table-sm table-striped">
         <tr><th>Name</th><th>Value</th></tr>
-        @foreach (string key in Model.Keys) {
+        @foreach (string key in Model.Keys)
+        {
             <tr><td>@key</td><td>@Model[key]</td></tr>
         }
     </table>
