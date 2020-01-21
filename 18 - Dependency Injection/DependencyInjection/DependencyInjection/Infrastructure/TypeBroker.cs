@@ -1,9 +1,12 @@
 ﻿using DependencyInjection.Models;
 using System;
 
-namespace DependencyInjection.Infrastructure {
-    public static class TypeBroker {
-        private static Type repoType = typeof(MemoryRepository);
+namespace DependencyInjection.Infrastructure
+{
+    public static class TypeBroker
+    {
+        private static Type repoType = typeof(MemoryRepository); // default
+
         private static IRepository testRepo;
 
         public static IRepository Repository =>
@@ -12,7 +15,8 @@ namespace DependencyInjection.Infrastructure {
         public static void SetRepositoryType<T>() where T : IRepository =>
             repoType = typeof(T);
 
-        public static void SetTestObject(IRepository repo) {
+        public static void SetTestObject(IRepository repo)
+        {
             testRepo = repo;
         }
     }
