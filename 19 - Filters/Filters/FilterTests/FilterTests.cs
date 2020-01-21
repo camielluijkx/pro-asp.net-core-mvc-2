@@ -1,29 +1,30 @@
-﻿using System.Linq;
-using Filters.Infrastructure;
+﻿using Filters.Infrastructure;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Abstractions;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Moq;
+using System.Linq;
 using Xunit;
 
-namespace Tests {
-
-    public class FilterTests {
-
+namespace Tests
+{
+    public class FilterTests
+    {
         [Fact]
-        public void TestHttpsFilter() {
-
+        public void TestHttpsFilter()
+        {
             // Arrange
             var httpRequest = new Mock<HttpRequest>();
-            httpRequest.SetupSequence(m => m.IsHttps).Returns(true)
-                                                     .Returns(false);
+            httpRequest.SetupSequence(m => m.IsHttps).Returns(true).Returns(false);
+
             var httpContext = new Mock<HttpContext>();
             httpContext.SetupGet(m => m.Request).Returns(httpRequest.Object);
 
             var actionContext = new ActionContext(httpContext.Object,
                 new Microsoft.AspNetCore.Routing.RouteData(),
                 new ActionDescriptor());
+
             var authContext = new AuthorizationFilterContext(actionContext,
                 Enumerable.Empty<IFilterMetadata>().ToList());
 
