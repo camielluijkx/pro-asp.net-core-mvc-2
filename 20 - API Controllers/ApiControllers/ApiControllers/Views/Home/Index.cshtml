@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<Reservation>
-@{  Layout = "_Layout"; }
+
+@{ Layout = "_Layout"; }
 
 <form id="addform" asp-action="AddReservation" method="post">
     <div class="form-group">
@@ -18,7 +19,8 @@
 <table class="table table-sm table-striped table-bordered m-2">
     <thead><tr><th>ID</th><th>Client</th><th>Location</th></tr></thead>
     <tbody>
-        @foreach (var r in Model) {
+        @foreach (var r in Model)
+        {
             <tr>
                 <td>@r.ReservationId</td>
                 <td>@r.ClientName</td>
