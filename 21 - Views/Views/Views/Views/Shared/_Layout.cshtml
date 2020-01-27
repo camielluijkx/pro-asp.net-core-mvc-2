@@ -18,9 +18,12 @@
         This is part of the layout
     </div>
 
-    @if (IsSectionDefined("Footer")) {
+    @if (IsSectionDefined("Footer"))
+    {
         @RenderSection("Footer")
-    } else {
+    }
+    else
+    {
         <h4>This is the default footer</h4>
     }
 
