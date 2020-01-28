@@ -10,6 +10,9 @@
         <div class="row text-white">
             <div class="col-7"><h1>Products</h1></div>
             <div class="col-5">
+                @*@await Component.InvokeAsync("Poco")*@
+                @*@await Component.InvokeAsync(nameof(CitySummary))*@
+                @*@await Component.InvokeAsync("CitySummary", new { showList = true })*@
                 @await Component.InvokeAsync("ComboComponent")
             </div>
         </div>

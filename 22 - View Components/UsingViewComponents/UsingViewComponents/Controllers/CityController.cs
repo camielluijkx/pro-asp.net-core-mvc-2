@@ -4,27 +4,40 @@ using Microsoft.AspNetCore.Mvc.ViewComponents;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using UsingViewComponents.Models;
 
-namespace UsingViewComponents.Controllers {
-
+namespace UsingViewComponents.Controllers
+{
     [ViewComponent(Name = "ComboComponent")]
-    public class CityController : Controller {
+    public class CityController : Controller
+    {
         private ICityRepository repository;
 
-        public CityController(ICityRepository repo) {
+        public CityController(ICityRepository repo)
+        {
             repository = repo;
         }
 
-        public ViewResult Create() => View();
+        public ViewResult Create()
+        {
+            return View();
+        }
 
         [HttpPost]
-        public IActionResult Create(City newCity) {
+        public IActionResult Create(City newCity)
+        {
             repository.AddCity(newCity);
+
             return RedirectToAction("Index", "Home");
         }
 
-        public IViewComponentResult Invoke() => new ViewViewComponentResult() {
-            ViewData = new ViewDataDictionary<IEnumerable<City>>(ViewData,
-                repository.Cities)
-        };
+        public IViewComponentResult Invoke()
+        {
+            ViewDataDictionary<IEnumerable<City>> viewData = 
+                new ViewDataDictionary<IEnumerable<City>>(ViewData, repository.Cities);
+
+            return new ViewViewComponentResult
+            {
+                ViewData = viewData
+            };
+        }
     }
 }
