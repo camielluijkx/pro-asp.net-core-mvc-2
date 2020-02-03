@@ -1,16 +1,16 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Cities.Infrastructure.TagHelpers;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Xunit;
 
-namespace Cities.Tests {
-
-    public class TagHelperTests {
-
+namespace Cities.Tests
+{
+    public class TagHelperTests
+    {
         [Fact]
-        public void TestTagHelper() {
+        public void TestTagHelper()
+        {
             // Arrange
             var context = new TagHelperContext(
                 new TagHelperAttributeList(),
@@ -23,7 +23,8 @@ namespace Cities.Tests {
                         (new DefaultTagHelperContent()));
 
             // Act
-            var tagHelper = new ButtonTagHelper {
+            var tagHelper = new ButtonTagHelper
+            {
                 BsButtonColor = "testValue"
             };
             tagHelper.Process(context, output);

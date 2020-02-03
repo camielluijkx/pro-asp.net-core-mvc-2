@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<City>
 
-@{  Layout = "_Layout"; }
+@{ Layout = "_Layout"; }
 
 <table class="table table-sm table-bordered">
     <thead class="bg-primary text-white">
@@ -11,7 +11,8 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var city in Model) {
+        @foreach (var city in Model)
+        {
             <tr>
                 <td>@city.Name</td>
                 <td>@city.Country</td>
