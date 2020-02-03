@@ -1,6 +1,7 @@
-﻿namespace Cities.Models {
-
-    public enum CountryNames {
+﻿namespace Cities.Models
+{
+    public enum CountryNames
+    {
         UK,
         USA,
         France,

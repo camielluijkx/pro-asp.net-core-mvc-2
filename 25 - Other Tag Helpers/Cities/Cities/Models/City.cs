@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Cities.Models {
-
-    public class City {
-
+namespace Cities.Models
+{
+    public class City
+    {
         [Display(Name = "City")]
         public string Name { get; set; }
 

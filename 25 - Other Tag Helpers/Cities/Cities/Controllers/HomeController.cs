@@ -1,35 +1,51 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Cities.Models;
-using System.Linq;
+﻿using Cities.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace Cities.Controllers {
-
-    public class HomeController : Controller {
+namespace Cities.Controllers
+{
+    public class HomeController : Controller
+    {
         private IRepository repository;
 
-        public HomeController(IRepository repo) {
+        public HomeController(IRepository repo)
+        {
             repository = repo;
         }
 
-        public ViewResult Index() => View(repository.Cities);
+        public ViewResult Index()
+        {
+            return View(repository.Cities);
+        }
 
-        public ViewResult Edit() {
-            ViewBag.Countries = new SelectList(repository.Cities
-                .Select(c => c.Country).Distinct());
+        public ViewResult Edit()
+        {
+            IEnumerable<string> cities = repository.Cities
+                .Select(c => c.Country).Distinct();
+
+            ViewBag.Countries = new SelectList(cities);
+
             return View("Create", repository.Cities.First());
         }
 
-        public ViewResult Create() {
-            ViewBag.Countries = new SelectList(repository.Cities
-                .Select(c => c.Country).Distinct());
+        public ViewResult Create()
+        {
+            IEnumerable<string> cities = repository.Cities
+                .Select(c => c.Country).Distinct();
+
+            ViewBag.Countries = new SelectList(cities);
+
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(City city) {
+        public IActionResult Create(City city)
+        {
             repository.AddCity(city);
+
             return RedirectToAction("Index");
         }
     }

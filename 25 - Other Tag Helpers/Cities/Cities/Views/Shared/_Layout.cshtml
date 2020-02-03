@@ -3,13 +3,78 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Cities</title>
+
+    @*Globbing Patterns*@
+    @*<script asp-src-include="/lib/jquery/dist/**/*.js"></script>*@
+    @*<script asp-src-include="/lib/jquery/dist/**/*.min.js"></script>*@
+    @*<script asp-src-include="/lib/jquery/dist/**/*.slim.min.js"></script>*@
+    @*<script asp-src-include="/lib/jquery/dist/**/*.min.js" asp-src-exclude="**.slim.**"></script>*@
+    @*<script asp-src-include="/lib/jquery/dist/**/j*.js" asp-src-exclude="**.slim.**,**.min.**"></script>*@
+
+    @*<environment names="development">
+        <script asp-src-include="/lib/jquery/dist/**/j*.js" asp-src-exclude="**.slim.**,**.min.**"></script>
+    </environment>
+    <environment names="staging,production">
+        <script asp-src-include="/lib/jquery/dist/**/*.min.js" asp-src-exclude="**.slim.**"></script>
+    </environment>*@
+
+    @*<script asp-src-include="/lib/jquery/dist/**/j*.js" asp-src-exclude="**.slim.**,**.min.**" asp-append-version="true"></script>*@
+
+    @*<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js"></script>*@
+    @*<script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.2.1.min.js" 
+        asp-fallback-src-include="/lib/jquery/dist/**/*.min.js"
+        asp-fallback-src-exclude="**.slim.**"
+        asp-fallback-test="window.jQuery">
+    </script>*@
+
+    @*<link rel="stylesheet" asp-href-include="/lib/bootstrap/dist/**/*.min.css" asp-href-exclude="**/*-reboot*,**/*-grid" />*@
+    @*<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+        asp-fallback-href-include="/lib/bootstrap/dist/**/*.min.css"
+        asp-fallback-href-exclude="**/*-reboot*,**/*-grid*"
+        asp-fallback-test-class="btn" 
+        asp-fallback-test-property="display"
+        asp-fallback-test-value="inline-block" 
+        rel="stylesheet"/>*@
+
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+
 </head>
 <body class="m-1 p-1">
+
+    @*<environment names="development">
+            <div class="m-1 p-1 bg-info"><h2>This is Development</h2></div>
+        </environment>
+        <environment names="production">
+            <div class="m-1 p-1 bg-danger"><h2>This is Production</h2></div>
+        </environment>*@
+
+    @*<img src="~/images/city.png" asp-append-version="true" />*@
+
+    @*@await Component.InvokeAsync("Time")*@
+    
+    @*<cache expires-after="@TimeSpan.FromSeconds(15)">
+        @await Component.InvokeAsync("Time")
+    </cache>*@
+
+    @*<cache expires-on="@DateTime.Parse("2100-01-01")">
+        @await Component.InvokeAsync("Time")
+    </cache>*@
+
+    @*<cache expires-sliding="@TimeSpan.FromSeconds(10)">
+        @await Component.InvokeAsync("Time")
+    </cache>*@
+
+    @*<cache expires-sliding="@TimeSpan.FromSeconds(10)"
+        vary-by-route="action">
+        @await Component.InvokeAsync("Time")
+    </cache>*@
+
     <cache expires-sliding="@TimeSpan.FromSeconds(10)"
-           vary-by="@ViewContext.RouteData.Values["action"]">
+        vary-by="@ViewContext.RouteData.Values["action"]">
         @await Component.InvokeAsync("Time")
     </cache>
+
     <div>@RenderBody()</div>
+
 </body>
 </html>
