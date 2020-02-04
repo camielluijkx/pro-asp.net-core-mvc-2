@@ -1,9 +1,11 @@
 ﻿@model Person
+
 @{
     ViewBag.Title = "Create Person";
     Layout = "_Layout";
 }
 
+@*<form asp-action="Create" method="post">*@
 <form asp-action="DisplaySummary" method="post">
     <div class="form-group">
         <label asp-for="PersonId"></label>

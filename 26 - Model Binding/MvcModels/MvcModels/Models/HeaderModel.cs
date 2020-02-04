@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace MvcModels.Models {
-
-    public class HeaderModel {
-
+namespace MvcModels.Models
+{
+    public class HeaderModel
+    {
         [FromHeader]
         public string Accept { get; set; }
 
