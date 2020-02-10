@@ -79,7 +79,7 @@ namespace Users.Controllers
                 }
                 else
                 {
-                    AddErrorsFromResult(result);
+                    addErrorsFromResult(result);
                 }
             }
             else
@@ -118,7 +118,7 @@ namespace Users.Controllers
 
                 if (!validEmail.Succeeded)
                 {
-                    AddErrorsFromResult(validEmail);
+                    addErrorsFromResult(validEmail);
                 }
 
                 IdentityResult validPass = null;
@@ -135,7 +135,7 @@ namespace Users.Controllers
                     }
                     else
                     {
-                        AddErrorsFromResult(validPass);
+                        addErrorsFromResult(validPass);
                     }
                 }
 
@@ -150,7 +150,7 @@ namespace Users.Controllers
                     }
                     else
                     {
-                        AddErrorsFromResult(result);
+                        addErrorsFromResult(result);
                     }
                 }
             }
@@ -162,7 +162,7 @@ namespace Users.Controllers
             return View(user);
         }
 
-        private void AddErrorsFromResult(IdentityResult result)
+        private void addErrorsFromResult(IdentityResult result)
         {
             foreach (IdentityError error in result.Errors)
             {

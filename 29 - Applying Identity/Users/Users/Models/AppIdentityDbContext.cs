@@ -6,16 +6,19 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Threading.Tasks;
 
-namespace Users.Models {
-
-    public class AppIdentityDbContext : IdentityDbContext<AppUser> {
-
+namespace Users.Models
+{
+    public class AppIdentityDbContext : IdentityDbContext<AppUser>
+    {
         public AppIdentityDbContext(DbContextOptions<AppIdentityDbContext> options)
-            : base(options) { }
+            : base(options)
+        {
 
-        public static async Task CreateAdminAccount(IServiceProvider serviceProvider,
-            IConfiguration configuration) {
+        }
 
+        public static async Task CreateAdminAccount(
+            IServiceProvider serviceProvider, IConfiguration configuration)
+        {
             UserManager<AppUser> userManager =
                 serviceProvider.GetRequiredService<UserManager<AppUser>>();
             RoleManager<IdentityRole> roleManager =
@@ -26,19 +29,24 @@ namespace Users.Models {
             string password = configuration["Data:AdminUser:Password"];
             string role = configuration["Data:AdminUser:Role"];
 
-            if (await userManager.FindByNameAsync(username) == null) {
-                if (await roleManager.FindByNameAsync(role) == null) {
+            if (await userManager.FindByNameAsync(username) == null)
+            {
+                if (await roleManager.FindByNameAsync(role) == null)
+                {
                     await roleManager.CreateAsync(new IdentityRole(role));
                 }
 
-                AppUser user = new AppUser {
+                AppUser user = new AppUser
+                {
                     UserName = username,
                     Email = email
                 };
 
                 IdentityResult result = await userManager
                     .CreateAsync(user, password);
-                if (result.Succeeded) {
+
+                if (result.Succeeded)
+                {
                     await userManager.AddToRoleAsync(user, role);
                 }
             }
