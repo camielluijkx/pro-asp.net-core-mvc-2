@@ -1,11 +1,15 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
-namespace Users.Controllers {
+namespace Users.Controllers
+{
+    public class HomeController : Controller
+    {
+        public ViewResult Index()
+        {
+            var model = new Dictionary<string, object> { ["Placeholder"] = "Placeholder" };
 
-    public class HomeController : Controller {
-
-        public ViewResult Index() =>
-            View(new Dictionary<string, object> { ["Placeholder"] = "Placeholder" });
+            return View(model);
+        }
     }
 }
