@@ -1,11 +1,14 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Users.Controllers {
-
-    public class ClaimsController : Controller {
-
+namespace Users.Controllers
+{
+    public class ClaimsController : Controller
+    {
         [Authorize]
-        public ViewResult Index() => View(User?.Claims);
+        public ViewResult Index()
+        {
+            return View(User?.Claims);
+        }
     }
 }

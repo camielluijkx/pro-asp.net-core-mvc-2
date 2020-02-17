@@ -1,17 +1,19 @@
-﻿using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
-using Users.Models;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
+using Users.Models;
 
-namespace Users.Controllers {
-
-    public class HomeController : Controller {
+namespace Users.Controllers
+{
+    public class HomeController : Controller
+    {
         private UserManager<AppUser> userManager;
 
-        public HomeController(UserManager<AppUser> userMgr) {
+        public HomeController(UserManager<AppUser> userMgr)
+        {
             userManager = userMgr;
         }
 
@@ -20,14 +22,21 @@ namespace Users.Controllers {
 
         //[Authorize(Roles = "Users")]
         [Authorize(Policy = "DCUsers")]
-        public IActionResult OtherAction() => View("Index",
-            GetData(nameof(OtherAction)));
+        public IActionResult OtherAction()
+        {
+            return View("Index", GetData(nameof(OtherAction)));
+        }
 
         [Authorize(Policy = "NotBob")]
-        public IActionResult NotBob() => View("Index", GetData(nameof(NotBob)));
+        public IActionResult NotBob()
+        {
+            return View("Index", GetData(nameof(NotBob)));
+        }
 
-        private Dictionary<string, object> GetData(string actionName) =>
-            new Dictionary<string, object> {
+        private Dictionary<string, object> GetData(string actionName)
+        {
+            return new Dictionary<string, object>
+            {
                 ["Action"] = actionName,
                 ["User"] = HttpContext.User.Identity.Name,
                 ["Authenticated"] = HttpContext.User.Identity.IsAuthenticated,
@@ -36,28 +45,39 @@ namespace Users.Controllers {
                 ["City"] = CurrentUser.Result.City,
                 ["Qualification"] = CurrentUser.Result.Qualifications
             };
+        }
 
         [Authorize]
-        public async Task<IActionResult> UserProps() {
+        public async Task<IActionResult> UserProps()
+        {
             return View(await CurrentUser);
         }
 
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> UserProps(
-                [Required]Cities city,
-                [Required]QualificationLevels qualifications) {
-            if (ModelState.IsValid) {
+            [Required]Cities city, [Required]QualificationLevels qualifications)
+        {
+            if (ModelState.IsValid)
+            {
                 AppUser user = await CurrentUser;
                 user.City = city;
                 user.Qualifications = qualifications;
+
                 await userManager.UpdateAsync(user);
+
                 return RedirectToAction("Index");
             }
+
             return View(await CurrentUser);
         }
 
-        private Task<AppUser> CurrentUser =>
-            userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+        private Task<AppUser> CurrentUser
+        {
+            get
+            {
+                return userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+            }
+        }
     }
 }
